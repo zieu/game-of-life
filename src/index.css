@@ -1,13 +1,65 @@
-body {
+* {
+  box-sizing: border-box;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.game {
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+}
+
+.canvas {
+  width: 100%;
+  height: calc(100% - 100px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+}
+
+.cell {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #fff;
+  background: rgb(24, 24, 24);
+  color: #fff;
+  cursor: pointer;
+  font-size: 9px !important	;
+}
+
+.cell:hover {
+  filter: brightness(2.5);
+}
+
+.cell--alive {
+  background: rgb(34, 170, 95);
+}
+
+.cell--alive:hover {
+  filter: brightness(1.2);
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  background: #222;
+}
+
+.size-input {
+  padding: 8px 10px;
+  border-radius: 5px;
+  border: 1px solid #555;
+  background: #ededed;
+  margin-top: 10px;
 }
