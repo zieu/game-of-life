@@ -29,7 +29,7 @@ function Game() {
   const SIZE = 10;
   const [grid, setGrid] = useState(gridCreator(SIZE));
   const [size, setSize] = useState<string | number>(SIZE);
-  const [start, setStart] = useState(false);
+  // const [start, setStart] = useState(false);
 
   const toggleLive = (id: string, x: number, y: number) => {
     const currentCell = grid[x][y];
@@ -51,9 +51,9 @@ function Game() {
   }, [size]);
   console.log("iteration1111");
 
-  useEffect(() => {
-    if (start === true) setInterval(() => iterator(), 1000);
-  });
+  // useEffect(() => {
+  //   if (start) setInterval(() => iterator(), 1000);
+  // });
 
   const iterator = () => {
     const newGrid = grid.map((row) =>
@@ -122,7 +122,7 @@ function Game() {
           max={21}
           min={4}
         />
-        <button className="start-button" onClick={() => setStart(!start)}>
+        <button className="start-button" onClick={() => iterator()}>
           Start
         </button>
       </footer>
