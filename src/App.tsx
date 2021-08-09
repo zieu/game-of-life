@@ -27,9 +27,11 @@ const getNeighbors = (x: number, y: number) => {
 
 function Game() {
   const SIZE = 10;
+  const SPEED = 300;
   const [grid, setGrid] = useState(gridCreator(SIZE));
   const [size, setSize] = useState<string | number>(SIZE);
   const [start, setStart] = useState(false);
+  const [speed, setSpeed] = useState<string | number>(SPEED);
 
   const toggleLive = (id: string, x: number, y: number) => {
     const currentCell = grid[x][y];
@@ -50,12 +52,9 @@ function Game() {
     setGrid(gridCreator(parseInt(size as string)));
   }, [size]);
 
-  let [count, setCount] = useState(0);
-
   useInterval(() => {
     if (start) iterator();
-    setCount(count + 1);
-  }, 300);
+  }, parseInt(speed as string));
 
   const iterator = () => {
     const newGrid = grid.map((row) =>
@@ -124,10 +123,16 @@ function Game() {
           max={35}
           min={4}
         />
+        <input
+          type="range"
+          onChange={(e) => setSpeed(e.target.value)}
+          value={speed}
+          max={1000}
+          min={50}
+        />
         <button className="start-button" onClick={() => setStart(!start)}>
           {start ? "stop" : "start"}
         </button>
-        <div>{count}</div>
       </footer>
     </div>
   );
