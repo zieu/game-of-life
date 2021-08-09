@@ -9,6 +9,7 @@
 
 import { useEffect, useState } from "react";
 import { gridCreator } from "./gridCreator";
+import { useInterval } from "./useInterval";
 
 const getNeighbors = (x: number, y: number) => {
   const nbs = [
@@ -21,7 +22,6 @@ const getNeighbors = (x: number, y: number) => {
     { x: x + 1, y: y - 0 },
     { x: x + 1, y: y + 1 },
   ];
-  // return nbs.filter((c) => c.x >= 0 && c.y >= 0);
   return nbs;
 };
 
@@ -29,7 +29,7 @@ function Game() {
   const SIZE = 10;
   const [grid, setGrid] = useState(gridCreator(SIZE));
   const [size, setSize] = useState<string | number>(SIZE);
-  // const [start, setStart] = useState(false);
+  const [start, setStart] = useState(false);
 
   const toggleLive = (id: string, x: number, y: number) => {
     const currentCell = grid[x][y];
@@ -49,11 +49,13 @@ function Game() {
   useEffect(() => {
     setGrid(gridCreator(parseInt(size as string)));
   }, [size]);
-  console.log("iteration1111");
 
-  // useEffect(() => {
-  //   if (start) setInterval(() => iterator(), 1000);
-  // });
+  let [count, setCount] = useState(0);
+
+  useInterval(() => {
+    if (start) iterator();
+    setCount(count + 1);
+  }, 300);
 
   const iterator = () => {
     const newGrid = grid.map((row) =>
@@ -100,7 +102,7 @@ function Game() {
                     key={y}
                     onClick={() => toggleLive(cell.id, x, y)}
                   >
-                    {cell.id}
+                    {/* {cell.id} */}
                   </li>
                 ))}
               </ul>
@@ -119,12 +121,13 @@ function Game() {
           type="range"
           onChange={(e) => setSize(e.target.value)}
           value={size}
-          max={21}
+          max={35}
           min={4}
         />
-        <button className="start-button" onClick={() => iterator()}>
-          Start
+        <button className="start-button" onClick={() => setStart(!start)}>
+          {start ? "stop" : "start"}
         </button>
+        <div>{count}</div>
       </footer>
     </div>
   );

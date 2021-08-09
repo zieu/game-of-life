@@ -17,11 +17,11 @@ const gridGenerator = (size: number) => {
 };
 
 export const gridCreator = (size: number) => {
-  if (size <= 21 && size > 4) {
+  if (size <= 35 && size > 4) {
     return gridGenerator(size);
   } else if (size <= 5) {
     return gridGenerator(4);
   } else {
-    return gridGenerator(21);
+    return gridGenerator(35);
   }
 };
