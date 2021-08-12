@@ -10,7 +10,7 @@
 import { useEffect, useState } from "react";
 import { gridCreator } from "./gridCreator";
 import { useInterval } from "./useInterval";
-import { button, useControls } from "leva";
+import { useControls } from "leva";
 import {
   SIZE,
   SIZE_MAX,
