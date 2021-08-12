@@ -1,3 +1,5 @@
+import { SIZE_MAX, SIZE_MIN } from "./constants";
+
 const gridGenerator = (size: number) => {
   const grid = [];
   for (let x = 0; x < size; x++) {
@@ -17,11 +19,11 @@ const gridGenerator = (size: number) => {
 };
 
 export const gridCreator = (size: number) => {
-  if (size <= 35 && size > 4) {
+  if (size <= SIZE_MAX && size > SIZE_MIN) {
     return gridGenerator(size);
   } else if (size <= 5) {
-    return gridGenerator(4);
+    return gridGenerator(SIZE_MIN);
   } else {
-    return gridGenerator(35);
+    return gridGenerator(SIZE_MAX);
   }
 };

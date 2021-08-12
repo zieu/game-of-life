@@ -12,7 +12,7 @@
 
 .canvas {
   width: 100%;
-  height: calc(100% - 100px);
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -45,20 +45,4 @@
 
 .cell--alive:hover {
   filter: brightness(1.2);
-}
-
-footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100px;
-  background: #222;
-}
-
-.size-input {
-  padding: 8px 10px;
-  border-radius: 5px;
-  border: 1px solid #555;
-  background: #ededed;
-  margin-top: 10px;
 }

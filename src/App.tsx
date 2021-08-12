@@ -10,6 +10,15 @@
 import { useEffect, useState } from "react";
 import { gridCreator } from "./gridCreator";
 import { useInterval } from "./useInterval";
+import { button, useControls } from "leva";
+import {
+  SIZE,
+  SIZE_MAX,
+  SIZE_MIN,
+  SPEED,
+  SPEED_MAX,
+  SPEED_MIN,
+} from "./constants";
 
 const getNeighbors = (x: number, y: number) => {
   const nbs = [
@@ -26,12 +35,21 @@ const getNeighbors = (x: number, y: number) => {
 };
 
 function Game() {
-  const SIZE = 10;
-  const SPEED = 300;
   const [grid, setGrid] = useState(gridCreator(SIZE));
-  const [size, setSize] = useState<string | number>(SIZE);
   const [start, setStart] = useState(false);
-  const [speed, setSpeed] = useState<string | number>(SPEED);
+  // const [size, setSize] = useState<string | number>(SIZE);
+  // const [speed, setSpeed] = useState<string | number>(SPEED);
+  const { speed, size } = useControls({
+    speed: {
+      value: SPEED,
+      min: SPEED_MIN,
+      max: SPEED_MAX,
+      label: "Speed (ms)",
+    },
+    size: { value: SIZE, min: SIZE_MIN, max: SIZE_MAX, label: "Grid size" },
+    start: button(() => setStart(true)),
+    stop: button(() => setStart(false)),
+  });
 
   const toggleLive = (id: string, x: number, y: number) => {
     const currentCell = grid[x][y];
@@ -49,12 +67,12 @@ function Game() {
   };
 
   useEffect(() => {
-    setGrid(gridCreator(parseInt(size as string)));
+    setGrid(gridCreator(size));
   }, [size]);
 
   useInterval(() => {
     if (start) iterator();
-  }, parseInt(speed as string));
+  }, speed);
 
   const iterator = () => {
     const newGrid = grid.map((row) =>
@@ -109,31 +127,6 @@ function Game() {
           })}
         </div>
       </div>
-      <footer>
-        <input
-          className="size-input"
-          type="number"
-          value={size}
-          onChange={(e) => setSize(e.target.value)}
-        />
-        <input
-          type="range"
-          onChange={(e) => setSize(e.target.value)}
-          value={size}
-          max={35}
-          min={4}
-        />
-        <input
-          type="range"
-          onChange={(e) => setSpeed(e.target.value)}
-          value={speed}
-          max={1000}
-          min={50}
-        />
-        <button className="start-button" onClick={() => setStart(!start)}>
-          {start ? "stop" : "start"}
-        </button>
-      </footer>
     </div>
   );
 }
