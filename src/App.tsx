@@ -36,8 +36,6 @@ const getNeighbors = (x: number, y: number) => {
 
 function Game() {
   const [grid, setGrid] = useState(gridCreator(SIZE));
-  // const [size, setSize] = useState<string | number>(SIZE);
-  // const [speed, setSpeed] = useState<string | number>(SPEED);
   const { speed, size, animation } = useControls({
     speed: {
       value: SPEED,
@@ -45,7 +43,13 @@ function Game() {
       max: SPEED_MAX,
       label: "Speed (ms)",
     },
-    size: { value: SIZE, min: SIZE_MIN, max: SIZE_MAX, label: "Grid size" },
+    size: {
+      value: SIZE,
+      min: SIZE_MIN,
+      max: SIZE_MAX,
+      label: "Grid size",
+      step: 1,
+    },
     // start: button(() => setStart(true)),
     // stop: button(() => setStart(false)),
     animation: { value: false, label: "Run animation" },
