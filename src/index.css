@@ -17,6 +17,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  background: #141618;
 }
 
 .row {
@@ -29,10 +30,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #222;
+  border: 1px solid #283038;
   background: transparent;
   cursor: pointer;
-  font-size: 9px !important	;
+  font-size: 9px !important;
+  border-radius: 3px;
 }
 
 .cell:hover {
@@ -40,7 +42,7 @@
 }
 
 .cell--alive {
-  background: rgb(34, 170, 95);
+  background: #007bff;
 }
 
 .cell--alive:hover {
