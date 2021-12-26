@@ -39,7 +39,6 @@ html,
   background: transparent;
   cursor: pointer;
   font-size: 9px !important;
-  border-radius: 3px;
 }
 
 .cell:hover {

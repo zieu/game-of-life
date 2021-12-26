@@ -36,6 +36,7 @@ const getNeighbors = (x: number, y: number) => {
 
 function Game() {
   const [grid, setGrid] = useState(gridCreator(SIZE));
+  const [isDrawing, setIsDrawing] = useState<boolean>(Boolean);
   const { speed, size, animation } = useControls({
     speed: {
       value: SPEED,
@@ -54,21 +55,6 @@ function Game() {
     // stop: button(() => setStart(false)),
     animation: { value: false, label: "Run animation" },
   });
-
-  const toggleLive = (id: string, x: number, y: number) => {
-    const currentCell = grid[x][y];
-    const modifiedCell = { ...currentCell, alive: !currentCell.alive };
-    const newGrid = grid.map((row) =>
-      row.map((cell) => {
-        if (cell.id === id) {
-          return modifiedCell;
-        } else {
-          return cell;
-        }
-      })
-    );
-    setGrid(newGrid);
-  };
 
   useEffect(() => {
     setGrid(gridCreator(size));
@@ -89,19 +75,14 @@ function Game() {
           if (grid[x] && grid[x][y] && grid[x][y]?.alive) aliveNbs++;
         }
         if (cell.alive && aliveNbs < 2) {
-          // console.log(cell.id, "is alive and live nbs are < 2: makes false");
           return { ...cell, alive: false };
         } else if (cell.alive && (aliveNbs === 2 || aliveNbs === 3)) {
-          // console.log(cell, "is alive and live nbs are 2 || 3): stays true");
           return { ...cell, alive: true };
         } else if (cell.alive && aliveNbs > 3) {
-          // console.log(cell.alive, "is alive and alive nbs > 3: makes false");
           return { ...cell, alive: false };
         } else if (!cell.alive && aliveNbs === 3) {
-          // console.log(cell, "is dead and live nbs are 3: makes true");
           return { ...cell, alive: true };
         } else {
-          // console.log(cell.alive, "is unchanged");
           return cell;
         }
       })
@@ -114,14 +95,29 @@ function Game() {
     <div className="game">
       <div className="canvas">
         <div className="grid">
-          {grid.map((row, x) => {
+          {grid.map((_, x) => {
             return (
               <ul className="row" key={x}>
                 {grid[x].map((cell, y) => (
                   <li
-                    className={cell.alive ? "cell cell--alive" : "cell"}
+                    className="cell"
+                    style={{
+                      background: cell.alive ? "#007bff" : "transparent",
+                    }}
                     key={y}
-                    onClick={() => toggleLive(cell.id, x, y)}
+                    onMouseDownCapture={() => (cell.alive = !cell.alive)}
+                    onMouseOver={(e: any) => {
+                      if (isDrawing) {
+                        cell.alive = !cell.alive;
+                        if (cell.alive) {
+                          e.target.style.background = "#007bff";
+                        } else {
+                          e.target.style.background = "transparent";
+                        }
+                      }
+                    }}
+                    onMouseDown={() => setIsDrawing(true)}
+                    onMouseUp={() => setIsDrawing(false)}
                   >
                     {/* {cell.id} */}
                   </li>
